@@ -118,10 +118,14 @@ def display_weather_info(weather_data, imperial=False):
     style.change_color(style.REVERSE)
     print(f"{city:^{style.PADDING}}", end="")
     style.change_color(style.RESET)
+
+    style.change_color(style.RED)
     print(
         f"\t{weather_description.capitalize():^{style.PADDING}}",
         end=" ",
     )
+    style.change_color(style.RESET)
+
     print(f"({temperature}°{'F' if imperial else 'C'})")
 
 if __name__ == "__main__":

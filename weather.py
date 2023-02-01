@@ -90,7 +90,6 @@ def get_weather_data(query_url):
             sys.exit("Can't find weather data for this city")
         else:
             sys.exit(f"Something went wrong... ({http_error.code})")
-            
 
     data = response.read()
 

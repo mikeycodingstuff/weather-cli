@@ -93,7 +93,10 @@ def get_weather_data(query_url):
 
     data = response.read()
 
-    return json.loads(data)
+    try:
+        return json.loads(data)
+    except json.JSONDecodeError:
+        sys.exit("Couldn't read the server response.")
 
 if __name__ == "__main__":
     user_args = read_user_cli_args()

@@ -36,7 +36,7 @@ def read_user_cli_args():
 
     parser.add_argument(
         "-i",
-        "--imperial ",
+        "--imperial",
         action="store_true",
         help="display the temperature in imperial units",
     )

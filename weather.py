@@ -1,6 +1,8 @@
 import argparse
 from configparser import ConfigParser
 
+BASE_WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather'
+
 def _get_api_key():
     """Fetch the API key from your configuration file.
 

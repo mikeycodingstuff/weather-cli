@@ -1,5 +1,6 @@
 import argparse
 from configparser import ConfigParser
+from urllib import parse
 
 BASE_WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather'
 
@@ -34,13 +35,33 @@ def read_cli_args():
     )
 
     parser.add_argument(
-        "-f",
-        "--fahrenheit",
+        "-i",
+        "--imperial ",
         action="store_true",
-        help="display the temperature in fahrenheit",
+        help="display the temperature in imperial units",
     )
 
     return parser.parse_args()
+
+def build_weather_query(city_input, imperial =False):
+    """Builds the URL for an API request to OpenWeather's weather API.
+
+    Args:
+        city_input (List[str]): Name of a city as collected by argparse
+        imperial (bool): Whether or not to use imperial units for temperature
+
+    Returns:
+        str: URL formatted for a call to OpenWeather's city name endpoint
+    """
+    api_key = _get_api_key()
+    city_name = " ".join(city_input)
+    url_encoded_city_name = parse.quote_plus(city_name)
+    units = "imperial" if imperial else "metric"
+    url = (
+        f"{BASE_WEATHER_API_URL}?q={url_encoded_city_name}"
+        f"&units={units}&appid={api_key}"
+    )
+    return url
 
 if __name__ == "__main__":
     read_cli_args()

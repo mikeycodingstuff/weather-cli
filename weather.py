@@ -113,8 +113,11 @@ def display_weather_info(weather_data, imperial=False):
     weather_description = weather_data["weather"][0]["description"]
     temperature = weather_data["main"]["temp"]
 
-    print(f"{city}", end="")
-    print(f"\t{weather_description.capitalize()}", end=" ")
+    print(f"{city:^20}", end="")
+    print(
+        f"\t{weather_description.capitalize():^20}",
+        end=" ",
+    )
     print(f"({temperature}°{'F' if imperial else 'C'})")
 
 if __name__ == "__main__":
@@ -122,4 +125,3 @@ if __name__ == "__main__":
     query_url = build_weather_query(user_args.city, user_args.imperial)
     weather_data = get_weather_data(query_url)
     display_weather_info(weather_data, user_args.imperial)
-    

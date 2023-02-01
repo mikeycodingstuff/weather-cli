@@ -16,7 +16,7 @@ def _get_api_key():
     config.read("secrets.ini")
     return config["openweather"]["api_key"]
 
-def read_cli_args():
+def read_user_cli_args():
     """Handles the CLI user interactions.
 
     Returns:
@@ -55,6 +55,7 @@ def build_weather_query(city_input, imperial =False):
     """
     api_key = _get_api_key()
     city_name = " ".join(city_input)
+    # encodes string. ' ' converted to '+'
     url_encoded_city_name = parse.quote_plus(city_name)
     units = "imperial" if imperial else "metric"
     url = (
@@ -64,4 +65,6 @@ def build_weather_query(city_input, imperial =False):
     return url
 
 if __name__ == "__main__":
-    read_cli_args()
+    user_args = read_user_cli_args()
+    query_url = build_weather_query(user_args.city, user_args.imperial)
+    print(query_url)

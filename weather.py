@@ -6,6 +6,7 @@ from configparser import ConfigParser
 from urllib import error, parse, request
 
 BASE_WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather"
+PADDING = 20
 
 def _get_api_key():
     """Fetch the API key from your configuration file.
@@ -113,9 +114,9 @@ def display_weather_info(weather_data, imperial=False):
     weather_description = weather_data["weather"][0]["description"]
     temperature = weather_data["main"]["temp"]
 
-    print(f"{city:^20}", end="")
+    print(f"{city:^{PADDING}}", end="")
     print(
-        f"\t{weather_description.capitalize():^20}",
+        f"\t{weather_description.capitalize():^{PADDING}}",
         end=" ",
     )
     print(f"({temperature}°{'F' if imperial else 'C'})")

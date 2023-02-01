@@ -14,8 +14,10 @@ def _get_api_key():
         [openweather]
         api_key=<YOUR-OPENWEATHER-API-KEY>
     """
+
     config = ConfigParser()
     config.read("secrets.ini")
+
     return config["openweather"]["api_key"]
 
 def read_user_cli_args():
@@ -24,6 +26,7 @@ def read_user_cli_args():
     Returns:
         argparse.Namespace: Populated namespace object
     """
+
     parser = argparse.ArgumentParser(
         description="gets weather and temp information for a given city"
     )
@@ -55,6 +58,7 @@ def build_weather_query(city_input, imperial =False):
     Returns:
         str: URL formatted for a call to OpenWeather's city name endpoint
     """
+
     api_key = _get_api_key()
     city_name = " ".join(city_input)
     # encodes string. ' ' converted to '+'
@@ -64,6 +68,7 @@ def build_weather_query(city_input, imperial =False):
         f"{BASE_WEATHER_API_URL}?q={url_encoded_city_name}"
         f"&units={units}&appid={api_key}"
     )
+
     return url
 
 def get_weather_data(query_url):
@@ -75,11 +80,14 @@ def get_weather_data(query_url):
     Returns:
         dict: Weather information for a specific city
     """
+
     try:
         response = request.urlopen(query_url)
     except error.HTTPError:
         sys.exit("Can't find weather data for this city")
+
     data = response.read()
+    
     return json.loads(data)
 
 if __name__ == "__main__":

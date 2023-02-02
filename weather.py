@@ -1,11 +1,16 @@
+#!/usr/bin/env python3
+
 import argparse
 import json
 import sys
+import os
 
 from configparser import ConfigParser
 from urllib import error, parse, request
 
 import style
+
+secrets_path = os.path.dirname(os.path.realpath(__file__)) + "/secrets.ini"
 
 BASE_WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather"
 
@@ -29,7 +34,7 @@ def _get_api_key():
     """
 
     config = ConfigParser()
-    config.read("secrets.ini")
+    config.read(secrets_path)
 
     return config["openweather"]["api_key"]
 

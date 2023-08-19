@@ -66,7 +66,7 @@ def read_user_cli_args():
 
     if len(sys.argv) == 1:
         parser.print_help()
-        sys.exit(1)
+        sys.exit(0)
 
     return parser.parse_args()
 

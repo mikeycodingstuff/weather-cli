@@ -52,7 +52,7 @@ def read_user_cli_args():
     # Define the "city" argument that’ll take one or many inputs separated by whitespace
     parser.add_argument(
         "city",
-        nargs="+",
+        nargs="*",
         type=str,
         help="enter the city name"
     )
@@ -63,6 +63,10 @@ def read_user_cli_args():
         action="store_true",
         help="display the temperature in imperial units",
     )
+
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
 
     return parser.parse_args()
 
@@ -166,8 +170,11 @@ def _select_weather_display_params(weather_id):
         display_params = ("🌈", style.RESET)
     return display_params
 
-if __name__ == "__main__":
+def main():
     user_args = read_user_cli_args()
     query_url = build_weather_query(user_args.city, user_args.imperial)
     weather_data = get_weather_data(query_url)
     display_weather_info(weather_data, user_args.imperial)
+
+if __name__ == "__main__":
+    main()

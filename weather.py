@@ -24,6 +24,7 @@ ATMOSPHERE = range(700, 800)
 CLEAR = range(800, 801)
 CLOUDY = range(801, 900)
 
+
 def _get_api_key():
     """Fetch the API key from your configuration file.
 
@@ -38,6 +39,7 @@ def _get_api_key():
 
     return config["openweather"]["api_key"]
 
+
 def read_user_cli_args():
     """Handles the CLI user interactions.
 
@@ -50,12 +52,7 @@ def read_user_cli_args():
     )
 
     # Define the "city" argument that’ll take one or many inputs separated by whitespace
-    parser.add_argument(
-        "city",
-        nargs="*",
-        type=str,
-        help="enter the city name"
-    )
+    parser.add_argument("city", nargs="*", type=str, help="enter the city name")
 
     parser.add_argument(
         "-i",
@@ -70,7 +67,8 @@ def read_user_cli_args():
 
     return parser.parse_args()
 
-def build_weather_query(city_input, imperial =False):
+
+def build_weather_query(city_input, imperial=False):
     """Builds the URL for an API request to OpenWeather's weather API.
 
     Args:
@@ -92,6 +90,7 @@ def build_weather_query(city_input, imperial =False):
     )
 
     return url
+
 
 def get_weather_data(query_url):
     """Makes an API request to a URL and returns the data as a Python object.
@@ -119,6 +118,7 @@ def get_weather_data(query_url):
         return json.loads(data)
     except json.JSONDecodeError:
         sys.exit("Couldn't read the server response.")
+
 
 def display_weather_info(weather_data, imperial=False):
     """Prints formatted weather information about a city.
@@ -151,6 +151,7 @@ def display_weather_info(weather_data, imperial=False):
 
     print(f"({temperature}°{'F' if imperial else 'C'})")
 
+
 def _select_weather_display_params(weather_id):
     if weather_id in THUNDERSTORM:
         display_params = ("⛈️", style.RED)
@@ -170,11 +171,13 @@ def _select_weather_display_params(weather_id):
         display_params = ("🌈", style.RESET)
     return display_params
 
+
 def main():
     user_args = read_user_cli_args()
     query_url = build_weather_query(user_args.city, user_args.imperial)
     weather_data = get_weather_data(query_url)
     display_weather_info(weather_data, user_args.imperial)
+
 
 if __name__ == "__main__":
     main()
